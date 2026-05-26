@@ -1,0 +1,52 @@
+====================================================================
+  CV Speed Radar & Traffic Violation System - Setup Notes
+====================================================================
+
+PREREQUISITES
+  - Python 3.9 or later
+  - Webcam (optional, for live mode)
+
+SETUP
+  1. Create and activate a virtual environment:
+
+     Windows:
+       python -m venv venv
+       venv\Scripts\activate
+
+     macOS / Linux:
+       python -m venv venv
+       source venv/bin/activate
+
+  2. Install dependencies:
+
+       pip install -r requirements.txt
+
+     The first run will automatically download the YOLOv8n model
+     (~6 MB) from Ultralytics.
+
+  3. Run the application:
+
+       python main.py
+
+USAGE
+  - Select an input source (Live Webcam / Image Snapshot / MP4 Video)
+  - For Image/Video, click Browse to select your file
+  - Adjust the Speed Limit slider (default 60 km/h)
+  - Set the Detection Confidence threshold (default 0.50)
+  - Calibrate the Pixel-to-Meter homography scale (default 0.05)
+  - Click "Start" to begin processing
+  - Violations are logged to speed_violations/violations.csv
+  - Violation screenshots appear in the gallery panel in real-time
+
+HOMOGRAPHY NOTES
+  The four source points defining the road region are set as
+  relative coordinates (default: a trapezoid covering the lower
+  half of the frame).  The Pixel-to-Meter slider converts
+  bird's-eye-view pixel displacements into real-world metres for
+  speed calculation.  Adjust the scale factor so that known
+  distances in the scene match expected values.
+
+OUTPUTS
+  - speed_violations/violations.csv  - telemetry log (append)
+  - speed_violations/violation_*.png - stylised Canny-edge captures
+====================================================================
